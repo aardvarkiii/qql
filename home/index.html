@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="/wechat/resource/themes/mobile/style.css?v=1.2.0.44">
+    <link rel="stylesheet" type="text/css" href="/wechat/resource/themes/mobile/style-newindex.css?v=1.2.0.44">
+    <link rel="stylesheet" type="text/css" href="/wechat/resource/themes/mobile/weui.min.css?v=1.2.0.44">
+    <link rel="stylesheet" type="text/css" href="/wechat/resource/themes/mobile/mescroll.min.css?v=1.2.0.44">
+
+
+    <script type="text/javascript" src="/wechat/resource/scripts/weui.min.js?v=1.2.0.44"></script>
+    <script type="text/javascript" src="/wechat/resource/scripts/jquery-2.1.4.min.js?v=1.2.0.44"></script>
+    <script type="text/javascript" src="/wechat/resource/scripts/mescroll.min.js?v=1.2.0.44"></script>
+    <script type="text/javascript" src="/wechat/resource/scripts/base64.min.js?v=1.2.0.44"></script>
+    <script type="text/javascript" src="/wechat/resource/project/common/json2.js?v=1.2.0.44"></script>
+    <script type="text/javascript" src="/wechat/resource/project/common/common.js?v=1.2.0.440.2"></script>
+    <script type="text/javascript" src="/wechat/resource/project/common/wechat_common2.js?v=1.2.0.44005"></script>
+
+    <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.4.0.js?v=1.2.0.44"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><meta name="msapplication-tap-highlight" content="no"><title>首页</title><link rel="stylesheet" type="text/css" href="/wechat/resource/themes/mobile/style-newindex.css?v=1.2.0.4418"><link rel="stylesheet" type="text/css" href="/wechat/resource/themes/mobile/counter/css/style.css?v=1.2.0.4418"><link rel="stylesheet" type="text/css" href="/wechat/resource/themes/mobile/style-new-amplifiercard.css?v=1.2.0.440.1317"><script type="text/javascript" src="/wechat/resource/themes/mobile/counter/js/clock.js?v=1.2.0.441"></script><script type="text/javascript" src="/wechat/resource/scripts/index.js"></script><script type="text/javascript" src="/wechat/resource/scripts/jQuery.Hz2Py-min.js"></script><script type="text/javascript"> 
+        var errNum = 0;
+        $(function () {
+            document.body.addEventListener('touchstart', function () {
+            });
+
+            getCardInfo(setCardBalance);
+            getAccInfo(setAccBalance);
+            getSubCardInfo(showSubCardApplication);
+            getIdInfo(setIdino);
+            setCardTime();
+            
+            var shallMessageSwitch = $('#shallMessageSwitch').val();
+            if (shallMessageSwitch == '1') {
+                selectAllMessage();
+            }
+        });
+
+        function setElecAppList(retMap){
+			if(checkRequestFlag(retMap)){
+				var appList = retMap.applist;
+				var ulcid="";
+				$.each(appList,function(i,e){
+					var name = e.name;
+					var aid = e.aid;
+					if(name.indexOf("五山")!=-1){
+						ulcid="jk_ws";
+						name = name.replace("五山校区","").replace("五山","");
+					}else if(name.indexOf("大学城")!=-1){
+						ulcid="jk_dxc";
+						 name = name.replace("大学城校区","").replace("大学城",""); 
+					}else if(name.indexOf("国际")!=-1 || name.indexOf("(国)")!=-1){ 
+						ulcid="jk_gjxq";
+						name = name.replace("(国)","");
+					}else{
+						ulcid="jk_list";
+					}
+				  if(name.indexOf("宿舍缴电")!=-1){
+					   //if(ulcid!="jk_gjxq"){
+						   var jkbh="0026";
+							    $('#'+ulcid).append('<li class="new-application-item"><a href="' + ctxpath + '/elecpay/queryelecById.html?aid='+aid
+                            + '&name='+e.name+'"><i class="new-ico"><img src="' + ctxpath + '/resource/themes/mobile/images/ioc-electri.png"></i><span class="new-span">' + '电控缴费' + '</span></a></li>');
+					   
+					  // }
+                               
+                            }else if(name.indexOf("宿舍冷水")!=-1){
+                                var jkbh="0027";
+								$('#'+ulcid).append('<li class="new-application-item"><a href="' + ctxpath + '/elecpay/queryelecById.html?aid='+aid
+                            + '&name='+e.name+'"><i class="new-ico"><img src="' + ctxpath + '/resource/themes/mobile/images/ioc-coldwater.png"></i><span class="new-span">' + '冷水水控充值' + '</span></a></li>');
+                            }else if(name.indexOf("宿舍空调")!=-1){
+                                var jkbh="0028"
+								$('#'+ulcid).append('<li class="new-application-item"><a href="' + ctxpath + '/elecpay/queryelecById.html?aid='+aid
+                            + '&name='+e.name+'"><i class="new-ico"><img src="' + ctxpath + '/resource/themes/mobile/images/ioc-coolair.png"></i><span class="new-span">' + '空调缴费' + '</span></a></li>');
+                           }else{
+                                $('#'+ulcid).append('<li class="new-application-item"><a href="' + ctxpath + '/elecpay/queryelecById.html?aid='+aid
+                            + '&name='+name+'"><i class="new-ico"><img src="' + ctxpath + '/resource/themes/mobile/images/ioc-electri.png"></i><span class="new-span">' + name + '</span></a></li>');
+							}
+				})
+			
+				 $('#jk_ws').append('<li class="new-application-item"><a href="' + ctxpath + '/water/smallbagById.html?aid=01'+
+	                        '"><i class="new-ico"><img src="' + ctxpath + '/resource/themes/mobile/images/ioc-01.png"></i><span class="new-span">五山洗浴水控</span></a></li>');
+	           /* 
+				$('#jk_dxc').append('<li class="new-application-item"><a onclick="toAppPay(this);"' +' jkbh="0016" aid="02" name="大学城水控"><i class="new-ico"><img src="' + ctxpath + '/resource/themes/mobile/images/ioc-01.png"></i><span class="new-span">大学城水控</span></a></li>'); */
+					$('#jk_gjxq').append($('#app_fee').html());
+			}else{
+				weui.alert(retMap.errmsg);
+			}
+		}
+        function setCardBalance(retMap) {
+            if (checkRequestFlag(retMap)) {
+                var card = (retMap.card)[0];
+                var db_balance = card.db_balance;
+                var unsettle_amount = card.unsettle_amount;
+                db_balance = parseFloat(fenToYuan(db_balance));
+                unsettle_amount = parseFloat(fenToYuan(unsettle_amount));
+                var lostflag = card.lostflag;
+                var freezeflag = card.freezeflag;
+                var createdate=card.createdate;
+                var cr_year=createdate.substring(0,4);
+                var cr_month = createdate.substring(4,6);
+                var cr_day = createdate.substring(6,8);
+                var expdate=card.expdate;
+                var ex_year=expdate.substring(0,4);
+                var ex_month = expdate.substring(4,6);
+                var ex_day = expdate.substring(6,8);
+                $('#in_date').html(cr_month+"."+cr_year+"-"+ex_month+"."+ex_year);
+                $('#bin_date').html(cr_month+"."+cr_year+"-"+ex_month+"."+ex_year);
+                var status = '正常';
+                if (lostflag == 1) {
+                    status = '挂失';
+                }
+                if (freezeflag == 1) {
+                    status = '冻结';
+                }
+                $('#status').html(status);
+                $('#db_balance').html(db_balance.toFixed(2));
+                $('#unsettle_amount').html(unsettle_amount.toFixed(2));
+            } else {
+                errNum++;
+                if (errNum >= 2) {
+                    weui.alert('TSM服务器连接失败，已通知管理员，请稍后重试！');
+                }
+            }
+        }
+
+        function setAccBalance(retMap) {
+            if (checkRequestFlag(retMap)) {
+                var accinfo = retMap.accinfo;
+                var acc_balance = 0;
+                $.each(accinfo, function (i, e) {
+                    var balance = e.balance;
+                    acc_balance += parseFloat(fenToYuan(balance));
+                });
+                $('#acc_balance').html(acc_balance.toFixed(2));
+            } else {
+                errNum++;
+                if (errNum >= 2) {
+                    weui.alert('TSM服务器连接失败，已通知管理员，请稍后重试！');
+                    
+                }
+            }
+        }
+        
+        var schoolCodes = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10',
+                           '19', '20', '21', '22', '23', '24', '25', '26', '27', '28',
+                           '29'];
+        var facultystyCodes = ['11', '12', '13', '14'];
+        var temporaryCodes = ['16', '17', '18', '30', '31', '32', '33', '34', '35', 
+                              '36', '37', '38', '39', '40', '41'];
+        var familystyCodes = ['15'];
+        
+		function setIdino(retMap){
+			if(checkRequestFlag(retMap)){
+				console.log(retMap);
+				var idinfo = retMap.idinfo;
+				var idclass = idinfo[0].pidclass;
+				var deptName = idinfo[0].deptname;
+				var pidcode = idinfo[0].pidcode;
+				
+				// 设置部门
+				$('#deptName-1').html(deptName);
+				$('#deptName-2').html(deptName);
+				
+				if(schoolCodes.indexOf(pidcode) !== -1) {
+					// 学生卡 
+					$('#cardTypeName').html('学生卡');
+					$('#HomeCardTypeName').html('学生卡');
+					
+					$('#FCardSno').show();
+					$('#FCardDept').show();
+					$('#FCardYxq').show();
+					
+					$('#HomeCardSno').show();
+					$('#HomeCardDept').show();
+					$('#HomeCardYxq').show();
+				} else if(facultystyCodes.indexOf(pidcode) !== -1) {
+					// 教工卡  facultysty
+					$('#cardTypeName').html('教工卡');
+					$('#HomeCardTypeName').html('教工卡');
+					$('#F-Card-Enlarge').addClass('facultysty');
+					$('#HomeCardType').addClass('facultysty');
+					
+					$('#FCardGh').show();
+					$('#HomeCardGh').show();
+				} else if(temporaryCodes.indexOf(pidcode) !== -1) {
+					// 临时卡  temporary
+					$('#cardTypeName').html('临时卡');
+					$('#HomeCardTypeName').html('临时卡');
+					$('#F-Card-Enlarge').addClass('temporary');
+					$('#HomeCardType').addClass('temporary');
+				} else if(familystyCodes.indexOf(pidcode) !== -1) {
+					// 家属卡  familysty
+					$('#cardTypeName').html('家属卡');
+					$('#HomeCardTypeName').html('家属卡');
+					$('#F-Card-Enlarge').addClass('familysty');
+					$('#HomeCardType').addClass('familysty');
+				}
+			} else{
+				errNum++;
+                if (errNum >= 2) {
+                    weui.alert('TSM服务器连接失败，已通知管理员，请稍后重试！');
+                }
+			}
+		}
+        
+        function showSubCardApplication(retMap) {
+            var subCardFlag = false;
+            if (checkRequestFlag(retMap)) {
+                subCardFlag = true;
+            }
+
+            var allSchoolJk = '[{"jkbh":"0018","icon":"ioc-06.png","name":"校园卡二维码"},{"jkbh":"0019","icon":"ioc-scan.png","name":"扫一扫"},{"jkbh":"0026","icon":"ioc-scan.png","name":"扫码付水电费"},{"jkbh":"0002","icon":"ioc-recharge.png","name":"校园卡充值"},{"jkbh":"0004","icon":"ioc-03.png","name":"挂失\/解挂"},{"jkbh":"0005","icon":"ioc-pass.png","name":"密码修改"},{"jkbh":"0010","icon":"ioc-bill.png","name":"我的账单"},{"jkbh":"0022","icon":"ioc-11-1.png","name":"为TA充值"},{"jkbh":"0001","icon":"ioc-use.png","name":"基本信息查询"},{"jkbh":"0008","icon":"ioc-04.png","name":"绑定\/解绑"},{"jkbh":"0009","icon":"ioc-02.png","name":"余额查询"},{"jkbh":"0015","icon":"ioc-10.png","name":"缴网络服务分摊费"},{"jkbh":"0017","icon":"ioc-05.png","name":"认证码"}]';
+            var JkList = $.parseJSON(allSchoolJk);
+            $.each(JkList, function (i, e) {
+                var showFlag = false;
+                var jkbh = e.jkbh;
+                if (jkbh == '0012' || jkbh == '0013') {
+                    showFlag = subCardFlag;
+                } else {
+                    showFlag = true;
+                }
+                var listLength = $('#jk_list').find('.new-application-item').length;
+                if (listLength > 12) {
+                    showFlag = false;
+                }
+                if (showFlag) {
+
+                    var name = e.name;
+                    var icon = e.icon;
+					
+					if(jkbh=="0017"||jkbh=="0026"){
+						$("#jk_gjxq").append('<li class="new-application-item"><a href="' + ctxpath + '/url/redirectJkbh.html?jkbh=' + jkbh
+                        + '"><i class="new-ico"><img src="' + ctxpath + '/resource/themes/mobile/images/' + icon +
+                        '"></i><span class="new-span">' + name + '</span></a></li>');
+					}else{
+						$('#jk_list').append('<li class="new-application-item"><a href="' + ctxpath + '/url/redirectJkbh.html?jkbh=' + jkbh
+							+ '"><i class="new-ico"><img src="' + ctxpath + '/resource/themes/mobile/images/' + icon +
+							'"></i><span class="new-span">' + name + '</span></a></li>');
+					}
+                }
+            });
+            queryApplist('elec', setElecAppList);
+			$("#jk_ec_t").click(function(){
+				allapulhides();
+				$("#jk_list").toggle();
+			});
+			 $("#jk_ws_t").click(function(){
+				 allapulhides();
+				 $("#jk_ws").toggle();
+			 });
+			  $("#jk_dxc_t").click(function(){				    
+				 allapulhides();
+				$("#jk_dxc").toggle();				
+			 });
+			   $("#jk_gjxq_t").click(function(){
+				  allapulhides();
+				  $("#jk_gjxq").toggle();
+			 });
+        }
+
+        var pageindex = 1;
+        var pagesize = 3;
+
+        function moremesg() {
+            window.location.href = createUrl("/notice/news")
+        }
+
+        function toPayCode() {
+            window.location.href = createUrl("/url/redirectJkbh") + '?jkbh=0018';
+        }
+
+        function selectAllMessage() {
+            getMessage(pageindex, pagesize, setMessage);
+        }
+
+        function setMessage(retMap) {
+            if (checkRequestFlag(retMap)) {
+                showMessage(retMap);
+            }
+        }
+
+        function getMessage(pageindex, pagesize, callback) {
+            var url = createUrl("/home/message");
+            var param = {
+                pageindex: pageindex,
+                pagesize: pagesize
+            }
+            ajax(url, param, callback, true);
+        }
+
+        function showMessage(retMap) {
+            var data = retMap.data.rows;
+            var total = retMap.data.total;
+            var array = data;
+            var html = '';
+            if (array.length == 0) {
+                $('#ul').html('<li class="new-notic-item"><p>暂无通知公告消息</p><em></em></li>')
+                clearInterval(codnum);
+            } else {
+                var shallGatewayUrl = $('#shallGatewayUrl').val();
+                for (var i = 0; i < array.length; i++) {
+                    html += '<li class="new-notic-item">' +
+                        '<a style="text-decoration: none;color:inherit;" href="' + shallGatewayUrl + '/Category/pPageDetails?id=' + array[i].ID + '&title=' + array[i].TITLE
+                        + '&newsdetailsname=' + array[i].NEWSDETAILSNAME + '&pagename=' + array[i].PAGENAME
+                        + '&cometitle=1"><p>' + array[i].TITLE + '</p><em>' + array[i].FBTIME + '</em></a></li>';
+                }
+                $('#ul').html(html);
+            }
+
+        }
+    </script><script type="text/javascript" src="/wechat/resource/project/internationalCampus/elecautoqurty.js?v=1.2.0.44"></script></head>
+<body>
+	<!--  放大 模块-->
+	<div class="hcf-Card-enlarge " style="display: none;" id="F-Card-Enlarge">  <!-- 身份修改  无样式 默认学生卡   familysty 家属 facultysty 教工  temporary 临时 -->
+	<!-- <div class="hcf-Card-enlarge facultysty"  style="display:none;" id="F-Card-Enlarge"> 身份修改  无样式 默认学生卡   familysty 家属 facultysty 教工  temporary 临时 -->
+	<!-- <div class="hcf-Card-enlarge familysty" style="display:none;" id="F-Card-Enlarge">  身份修改  无样式 默认学生卡   familysty 家属 facultysty 教工  temporary 临时 -->
+	<!-- <div class="hcf-Card-enlarge temporary" style="display:none;" id="F-Card-Enlarge">  身份修改  无样式 默认学生卡   familysty 家属 facultysty 教工  temporary 临时 -->
+		<div class="new-head new-head-s2" id="HSmain" style="left: 589px; top: 277.5px;"><!-- id="HSmain" -->
+  	 		<div class="new-use new-use-s2">
+  	 			<div class="new-use-logo">
+  	 				<img src="/wechat/resource/themes/mobile/images/uselogo.png">
+  	 			</div>
+		  	 	<!-- 学生卡-->
+		  	 	<div class="new-use-info">
+		  	 		<ul>
+		  	 			<li><span class="new-font">姓名<i></i></span><b class="new-font-b">李唯</b></li>
+		  	 			<li id="FCardSno" style=""><span class="new-font">学号<i></i></span><b class="new-font-b">201964450478</b><em class="new-font-em">S1</em></li>
+		  	 			<li id="FCardGh" style="display: none;"><span class="new-font">工号<i></i></span><b class="new-font-b">201964450478</b></li>
+		  	 		    <li id="FCardDept" style=""><span class="new-font">学院<i></i></span><b class="new-font-b" id="deptName-1">2019经济与贸易学院电子商务类</b></li>
+		  	 		    <li><span class="new-font">卡号<i></i></span><b class="new-font-b">170130</b></li>
+		  	 		    <li id="FCardYxq" style=""><span class="new-font">在校期<i></i></span><b class="new-font-b" id="bin_date">09.2019-09.2023</b></li>
+		  	 		</ul>
+		  	 	</div>
+		        
+        		<div class="new-use-photo">
+        		<span class="new-use-photo-title" id="cardTypeName">学生卡</span><!--学生卡  教工卡  临时卡 家属卡 -->
+        		<span class="new-use-photo-mian"><img src="data:image/png;base64,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"></span>
+        	</div>
+  	 	</div>
+  	 		<div class="new-use-contact ">
+	    	<ul>
+ 	    		<li><span>服务热线</span>(020-87110228)</li>
+ 	    		<li><span>服务二维码</span><img src="/wechat/resource/themes/mobile/images/contactmig.png"></li>
+ 	    	</ul>
+			<div class="hcf-timebox">
+  	   	 		<main>
+		  			<canvas id="my-canvas"></canvas>
+		  			<div id="clock">
+		  	 			<div class="time-container years">
+		  	 	 			<div class="digit nodigit">
+		           				<b class="time-container-topbg"></b>
+		         			</div>
+		      				<div class="digit">
+		      					<b class="time-container-topbg"></b>
+		        				<span class="num bottom" id="">
+		        					<div class="bottom-container" id="tyear">2022</div>
+		        				</span>
+		      				</div>
+		      				<div class="digit nodigit">
+		           				<b class="time-container-topbg"></b>
+		         			</div>
+		  	 			</div>
+		     			<div class="time-container months">
+		     	 			<div class="digit nodigit">
+		           				<b class="time-container-topbg"></b>
+		         			</div>
+		      				<div class="digit">
+		       					<b class="time-container-topbg"></b>
+		        				<span class="num bottom" id="">
+		          					<div class="bottom-container" id="tmonth">04</div>
+		          				</span>
+		      				</div>
+		     				<div class="digit nodigit">
+		           				<b class="time-container-topbg"></b>
+		         			</div>
+		     			</div>
+		     			<div class="time-container days">
+	     					<div class="digit nodigit">
+		           				<b class="time-container-topbg"></b>
+		         			</div>
+		      				<div class="digit">
+		       					<b class="time-container-topbg"></b>
+		        				<span class="num bottom" id="hour-tens-bottom">
+		          					<div class="bottom-container" id="tday">29</div>
+		          				</span>
+		      				</div>
+		        			<div class="digit nodigit">
+		           				<b class="time-container-topbg"></b>
+		         			</div>
+		     			</div>
+		     			<div class="time-container hours">
+		    				<div class="digit nodigit">
+		           				<b class="time-container-topbg"></b>
+		         			</div>
+					      	<div class="digit">
+					       		<b class="time-container-topbg"></b>
+					        	<span class="num top" id="hour-tens-top">1</span>
+					        	<span class="num bottom" id="hour-tens-bottom">
+					          		<div class="bottom-container">1</div>
+					          	</span>
+					          	<div class="swapper">
+					            	<div id="top-hour-tens-anim" class="num-anim top-anim" style="display:none;">
+					              		<div class="top-half-num">8</div>
+				            		</div>
+					            	<div id="bottom-hour-tens-anim" class="num-anim bottom-anim" style="display:none;">
+					              		<div class="bottom-half-num">
+					                		<div class="dropper">9</div>
+					                	</div>
+					            	</div>
+					        	</div>
+					      	</div>
+			      			<div class="digit">
+						        <b class="time-container-topbg"></b>
+						        <span class="num top" id="hour-ones-top">7</span>
+						        <span class="num bottom" id="hour-ones-bottom">
+						          	<div class="bottom-container">7</div>
+						        </span>
+					          	<div class="swapper">
+						        	<div id="top-hour-ones-anim" class="num-anim top-anim" style="visibility: hidden;">
+						            	<div class="top-half-num">6</div>
+						            </div>
+						            <div id="bottom-hour-ones-anim" class="num-anim bottom-anim" style="visibility: hidden;">
+						              	<div class="bottom-half-num">
+						                	<div class="dropper">7</div>
+						                </div>
+						            </div>
+						        </div>
+					      	</div>
+			        		<div class="digit nodigit">
+			           			<b class="time-container-topbg"></b>
+			         		</div>
+		    			</div>
+		      			<div class="time-container-in">:</div>
+					    <div class="time-container minutes">
+					    	<div class="digit nodigit">
+					    		<b class="time-container-topbg"></b>
+					   		</div>
+					      	<div class="digit">
+					       		<b class="time-container-topbg"></b>
+					        	<span class="num top" id="minute-tens-top">0</span>
+					        	<span class="num bottom" id="minute-tens-bottom">
+					          		<div class="bottom-container">0</div>
+					          	</span>
+					          	<div class="swapper">
+					            	<div id="top-minute-tens-anim" class="num-anim top-anim" style="visibility: hidden;">
+					              		<div class="top-half-num">5</div>
+					            	</div>
+					            	<div id="bottom-minute-tens-anim" class="num-anim bottom-anim" style="visibility: hidden;">
+					              		<div class="bottom-half-num">
+					                		<div class="dropper">0</div>
+					                	</div>
+					            	</div>
+					        	</div>
+					      	</div>
+					      	<div class="digit">
+						        <b class="time-container-topbg"></b>
+						        <span class="num top" id="minute-ones-top">4</span>
+						        <span class="num bottom" id="minute-ones-bottom">
+					          		<div class="bottom-container">4</div>
+					          	</span>
+					          	<div class="swapper">
+						            <div id="top-minute-ones-anim" class="num-anim top-anim" style="visibility: hidden;">
+						              <div class="top-half-num">3</div>
+						            </div>
+					            	<div id="bottom-minute-ones-anim" class="num-anim bottom-anim" style="visibility: hidden;">
+					              		<div class="bottom-half-num">
+					                		<div class="dropper">4</div>
+					                	</div>
+					            	</div>
+					        	</div>
+					      	</div>
+					        <div class="digit nodigit">
+					        	<b class="time-container-topbg"></b>
+				         	</div>
+					   	</div>
+		       			<div class="time-container-in">:</div>
+		    			<div class="time-container seconds">
+					    	<div class="digit nodigit">
+					        	<b class="time-container-topbg"></b>
+					    	</div>
+		      				<div class="digit">
+		        				<b class="time-container-topbg"></b>
+		        				<span class="num top" id="second-tens-top">2</span>
+		        				<b class="digit-bg"></b>
+		        				<span class="num bottom" id="second-tens-bottom">
+		          					<div class="bottom-container">2</div>
+		          				</span>
+		      				</div>
+		      				<div class="digit">
+		        				<b class="time-container-topbg"></b>
+		        				<span class="num top" id="second-ones-top">4</span>
+		        				<b class="digit-bg"></b>
+		        				<span class="num bottom" id="second-ones-bottom">
+		          					<div class="bottom-container">4</div>
+		          				</span>
+		      				</div>
+		      				<div class="digit nodigit">
+		           				<b class="time-container-topbg"></b>
+		         			</div>
+		            		<div class="swapper">
+		            			<div id="top-second-ones-anim" class="num-anim top-anim" style="visibility: hidden;">
+	              					<div class="top-half-num">3</div>
+		            			</div>
+		            			<div id="bottom-second-ones-anim" class="num-anim bottom-anim" style="visibility: hidden;">
+		               				<div class="bottom-half-num">
+		                				<div class="dropper">4</div>
+		                			</div>
+		            			</div>
+		        			</div>
+		     			</div>
+	  				</div>
+				</main>
+			</div>			
+  	    </div>  	 
+   		</div>
+	</div>	  	
+	<div class="new-body" id="New-Body" style="display: block;">
+ 		<div class="new-head new-head-s2" id="HomeCardType" style="margin-left: 589px; display: block;"> <!-- 身份修改  无样式 默认学生卡   familysty 家属 facultysty 教工  temporary 临时 -->
+		<!-- <div class="new-head new-head-s2 facultysty"  > 身份修改  无样式 默认学生卡   familysty 家属 facultysty 教工  temporary 临时 -->
+ 	 	<!-- <div class="new-head new-head-s2 temporary"  > 身份修改  无样式 默认学生卡   familysty 家属 facultysty 教工  temporary 临时 -->
+ 		<!-- <div class="new-head new-head-s2 familysty"  > 身份修改  无样式 默认学生卡   familysty 家属 facultysty 教工  temporary 临时 -->
+  	 	<div class="new-use new-use-s2">
+  	 		<div class="new-use-logo"><img src="/wechat/resource/themes/mobile/images/uselogo.png"></div>
+  	 		<!-- 学生卡-->
+	  	 	<div class="new-use-info">
+	  	 		<ul>
+	  	 			<li><span class="new-font ">姓名<i></i></span><b class="new-font-b">李唯</b></li>
+	  	 			<li id="HomeCardSno" style=""><span class="new-font ">学号<i></i></span><b class="new-font-b">201964450478</b><em class="new-font-em"></em></li>
+	  	 			<li id="HomeCardGh" style="display: none;"><span class="new-font ">工号<i></i></span><b class="new-font-b">201964450478</b></li>
+	  	 		    <li id="HomeCardDept" style=""><span class="new-font ">学院<i></i></span><b class="new-font-b" id="deptName-2">2019经济与贸易学院电子商务类</b></li>
+	  	 		    <li><span class="new-font ">卡号<i></i></span><b class="new-font-b">170130</b></li>
+	  	 		    <li id="HomeCardYxq" style=""><span class="new-font ">在校期<i></i></span><b class="new-font-b" id="in_date">09.2019-09.2023</b></li>
+	  	 		</ul>
+	  	 	</div>
+	        
+        	<div class="new-use-photo">
+        		<span class="new-use-photo-title" id="HomeCardTypeName">学生卡</span><!-- 学生卡 教工卡  临时卡 家属卡  -->
+	        	<span class="new-use-photo-mian"><img src="data:image/png;base64,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"></span>
+        	</div>
+  	 	</div>
+  	  	<div class="new-use-contact ">
+  	    	<ul>
+  	    		<li><span>服务热线</span>(020-87110228)</li>
+  	    		<li><span>服务二维码</span><img src="/wechat/resource/themes/mobile/images/contactmig.png"></li>
+  	    	</ul>
+  	    </div>
+   	</div>
+  	<div class="new-box">
+  	 	<div class="new-card new-cards2">
+  	 		<ul>
+	  	 		<li class="new-card-item"><span>卡余额</span> <b id="db_balance">0.00</b></li>
+	  	 		<li class="new-card-item"><span>过渡余额</span><b id="unsettle_amount">0.00</b></li>
+	  	 		<li class="new-card-item"><span>电子账户</span><b id="acc_balance">0.00</b></li>
+	  	 		<li class="justify-fix"></li>
+  	 		</ul>
+  	 	</div>
+	</div>
+  	<div class="new-box">
+	    <div class="new-box-title" id="jk_ec_t">
+	        <b></b>
+	        <span>我的校园卡</span>
+	        <em class="y-title-more">点击展开&nbsp;&nbsp;</em>
+	    </div>
+        <div class="new-box-contant">
+            <ul class="new-application" id="jk_list" style="display: block;">
+            <li class="new-application-item"><a href="/wechat/url/redirectJkbh.html?jkbh=0018"><i class="new-ico"><img src="/wechat/resource/themes/mobile/images/ioc-06.png"></i><span class="new-span">校园卡二维码</span></a></li><li class="new-application-item"><a href="/wechat/url/redirectJkbh.html?jkbh=0019"><i class="new-ico"><img src="/wechat/resource/themes/mobile/images/ioc-scan.png"></i><span class="new-span">扫一扫</span></a></li><li class="new-application-item"><a href="/wechat/url/redirectJkbh.html?jkbh=0002"><i class="new-ico"><img src="/wechat/resource/themes/mobile/images/ioc-recharge.png"></i><span class="new-span">校园卡充值</span></a></li><li class="new-application-item"><a href="/wechat/url/redirectJkbh.html?jkbh=0004"><i class="new-ico"><img src="/wechat/resource/themes/mobile/images/ioc-03.png"></i><span class="new-span">挂失/解挂</span></a></li><li class="new-application-item"><a href="/wechat/url/redirectJkbh.html?jkbh=0005"><i class="new-ico"><img src="/wechat/resource/themes/mobile/images/ioc-pass.png"></i><span class="new-span">密码修改</span></a></li><li class="new-application-item"><a href="/wechat/url/redirectJkbh.html?jkbh=0010"><i class="new-ico"><img src="/wechat/resource/themes/mobile/images/ioc-bill.png"></i><span class="new-span">我的账单</span></a></li><li class="new-application-item"><a href="/wechat/url/redirectJkbh.html?jkbh=0022"><i class="new-ico"><img src="/wechat/resource/themes/mobile/images/ioc-11-1.png"></i><span class="new-span">为TA充值</span></a></li><li class="new-application-item"><a href="/wechat/url/redirectJkbh.html?jkbh=0001"><i class="new-ico"><img src="/wechat/resource/themes/mobile/images/ioc-use.png"></i><span class="new-span">基本信息查询</span></a></li><li class="new-application-item"><a href="/wechat/url/redirectJkbh.html?jkbh=0008"><i class="new-ico"><img src="/wechat/resource/themes/mobile/images/ioc-04.png"></i><span class="new-span">绑定/解绑</span></a></li><li class="new-application-item"><a href="/wechat/url/redirectJkbh.html?jkbh=0009"><i class="new-ico"><img src="/wechat/resource/themes/mobile/images/ioc-02.png"></i><span class="new-span">余额查询</span></a></li><li class="new-application-item"><a href="/wechat/url/redirectJkbh.html?jkbh=0015"><i class="new-ico"><img src="/wechat/resource/themes/mobile/images/ioc-10.png"></i><span class="new-span">缴网络服务分摊费</span></a></li></ul>
+        </div>
+    </div>
+    <div class="new-box">
+    	<div class="new-box-title" id="jk_ws_t">
+        	<b></b>
+            <span>五山校区专属</span>
+			<em class="y-title-more">点击展开&nbsp;&nbsp;</em>
+        </div>
+        <div class="new-box-contant">
+            <ul class="new-application" id="jk_ws" style="display:none;">
+            <li class="new-application-item"><a href="/wechat/elecpay/queryelecById.html?aid=0030000000002501&amp;name=学生宿舍用电电费"><i class="new-ico"><img src="/wechat/resource/themes/mobile/images/ioc-electri.png"></i><span class="new-span">学生宿舍用电电费</span></a></li><li class="new-application-item"><a href="/wechat/elecpay/queryelecById.html?aid=0030000000006202&amp;name=五山学生宿舍空调费"><i class="new-ico"><img src="/wechat/resource/themes/mobile/images/ioc-coolair.png"></i><span class="new-span">空调缴费</span></a></li><li class="new-application-item"><a href="/wechat/water/smallbagById.html?aid=01"><i class="new-ico"><img src="/wechat/resource/themes/mobile/images/ioc-01.png"></i><span class="new-span">五山洗浴水控</span></a></li></ul>
+        </div>
+    </div>
+    <div class="new-box">
+    	<div class="new-box-title" id="jk_dxc_t">
+        	<b></b>
+            <span>大学城校区专属</span>   
+			<em class="y-title-more">点击展开&nbsp;&nbsp;</em>
+        </div>
+        <div class="new-box-contant">
+          <ul class="new-application" id="jk_dxc" style="display:none;">
+          <li class="new-application-item"><a href="/wechat/elecpay/queryelecById.html?aid=0030000000004602&amp;name=大学城校区学生宿舍空调费new"><i class="new-ico"><img src="/wechat/resource/themes/mobile/images/ioc-coolair.png"></i><span class="new-span">空调缴费</span></a></li></ul>
+        </div>
+  	</div>
+    <div class="new-box">
+    	<div class="new-box-title" id="jk_gjxq_t">
+        	<b></b>
+            <span>国际校区专属</span>     
+			<em class="y-title-more">点击展开&nbsp;&nbsp;</em>
+        </div>
+        <div class="new-box-contant">
+            <ul class="new-application" id="jk_gjxq" style="display:none;">
+ 			
+            <li class="new-application-item"><a href="/wechat/url/redirectJkbh.html?jkbh=0026"><i class="new-ico"><img src="/wechat/resource/themes/mobile/images/ioc-scan.png"></i><span class="new-span">扫码付水电费</span></a></li><li class="new-application-item"><a href="/wechat/url/redirectJkbh.html?jkbh=0017"><i class="new-ico"><img src="/wechat/resource/themes/mobile/images/ioc-05.png"></i><span class="new-span">认证码</span></a></li><li class="new-application-item"><a href="/wechat/elecpay/queryelecById.html?aid=0030000000004901&amp;name=(国)学生宿舍冷水费"><i class="new-ico"><img src="/wechat/resource/themes/mobile/images/ioc-coldwater.png"></i><span class="new-span">冷水水控充值</span></a></li><li class="new-application-item"><a href="/wechat/elecpay/queryelecById.html?aid=0030000000011101&amp;name=(国)学生宿舍缴电费"><i class="new-ico"><img src="/wechat/resource/themes/mobile/images/ioc-electri.png"></i><span class="new-span">电控缴费</span></a></li><li class="new-application-item"><a href="/wechat/elecpay/queryelecById.html?aid=0030000000011201&amp;name=(国)学生宿舍空调费"><i class="new-ico"><img src="/wechat/resource/themes/mobile/images/ioc-coolair.png"></i><span class="new-span">空调缴费</span></a></li>
+				
+	            <li class="new-application-item">
+	                <a href="/wechat/icinfo/query.html?aid=0030000000004901&amp;name=学生水费">
+	                    <i class="new-ico">
+	                        <img src="/wechat/resource/themes/mobile/images/ioc-coldwater-c3.png">
+	                    </i>
+	                    <span class="new-span">
+	                        <b id="querywater" style="color: #eb4250;font-weight: 500">0.00 元</b>
+	                    </span>
+	                </a>
+	            </li>
+	            <li class="new-application-item">
+	                <a href="/wechat/icinfo/query.html?aid=0030000000011101&amp;name=学生电费">
+	                    <i class="new-ico">
+	                        <img src="/wechat/resource/themes/mobile/images/ioc-electri-c3.png">
+	                    </i>
+	                    <span class="new-span">
+							<b id="queryelec" style="color: #eb4250;font-weight: 500">0.00 元</b>
+	                    </span>
+	                </a>
+	            </li>
+	            <li class="new-application-item">
+	                <a href="/wechat/icinfo/query.html?aid=0030000000011201&amp;name=学生空调费">
+	                    <i class="new-ico">
+	                        <img src="/wechat/resource/themes/mobile/images/ioc-coolair-c3.png">
+	                    </i>
+	                    <span class="new-span">
+	                       <b id="querycoolair" style="color: #eb4250;font-weight: 500">0.00 元</b>
+	                    </span>
+	                </a>
+	            </li>
+			</ul>
+			<ul class="" id="app_fee" style="display:none;">
+				
+	            <li class="new-application-item">
+	                <a href="/wechat/icinfo/query.html?aid=0030000000004901&amp;name=学生水费">
+	                    <i class="new-ico">
+	                        <img src="/wechat/resource/themes/mobile/images/ioc-coldwater-c3.png">
+	                    </i>
+	                    <span class="new-span">
+	                        <b id="querywater" style="color: #eb4250;font-weight: 500">0.00 元</b>
+	                    </span>
+	                </a>
+	            </li>
+	            <li class="new-application-item">
+	                <a href="/wechat/icinfo/query.html?aid=0030000000011101&amp;name=学生电费">
+	                    <i class="new-ico">
+	                        <img src="/wechat/resource/themes/mobile/images/ioc-electri-c3.png">
+	                    </i>
+	                    <span class="new-span">
+							<b id="queryelec" style="color: #eb4250;font-weight: 500">0.00 元</b>
+	                    </span>
+	                </a>
+	            </li>
+	            <li class="new-application-item">
+	                <a href="/wechat/icinfo/query.html?aid=0030000000011201&amp;name=学生空调费">
+	                    <i class="new-ico">
+	                        <img src="/wechat/resource/themes/mobile/images/ioc-coolair-c3.png">
+	                    </i>
+	                    <span class="new-span">
+	                       <b id="querycoolair" style="color: #eb4250;font-weight: 500">0.00 元</b>
+	                    </span>
+	                </a>
+	            </li>
+			</ul>
+        </div>
+    </div>
+   
+    <div class="new-box" style="display:none;">
+        <a href="/wechat/notice/news.html">
+            <div class="new-box-title">
+                <b></b>
+                <span>公告</span>
+                <i class="new-next">
+                    <img src="/wechat/resource/themes/mobile/images/ioc-next.png">
+                </i>
+                <em class="y-title-more">点击查看更多</em>
+            </div>
+        </a>
+        <div class="new-box-contant" id="div">
+            <ul class="new-notic" id="ul" style="height: 125px;">
+            </ul>
+        </div>
+    </div>
+    
+</div>
+
+<script> 
+$(document).ready(function(){ 
+	var detectOrient = function() {
+        var width = document.documentElement.clientWidth,
+                height = document.documentElement.clientHeight,
+                wrapper = document.getElementById("HSmain"),
+                style = "";
+        if(width >= height) { // 竖屏
+            style += "width:100%"; 
+            style += "height:100%;";
+            style += "-webkit-transform: rotate(0); transform: rotate(0);";
+            style += "-webkit-transform-origin: 0 0;";
+            style += "transform-origin: 0 0;";
+        } else { // 横屏
+            style += "width:" + height + "px;";// 注意旋转后的宽高切换
+            style += "height:" + width + "px;";
+            style += "-webkit-transform: rotate(90deg); transform: rotate(90deg);";
+            // 注意旋转中点的处理
+            style += "-webkit-transform-origin: " + width / 2 + "px " + width / 2 + "px;";
+            style += "transform-origin: " + width / 2 + "px " + width / 2 + "px;";
+        }
+        wrapper.style.cssText = style;
+    }
+    window.onresize = detectOrient;
+    detectOrient();
+
+</script>
+<script>
+function allapulhides(){	
+	$("#jk_ws").hide();
+	$("#jk_list").hide();
+	$("#jk_dxc").hide();
+	$("#jk_gjxq").hide();	
+}  
+function setCardTime(){
+    var now= new Date();
+    var year = now.getFullYear();
+    var month = now.getMonth()+1;
+    var day = now.getDate();
+    if(month<10){
+   	 month="0"+month;
+    }
+    if(day<10){
+   	 day="0"+day;
+    }
+
+    $('#tyear').html(year);
+    $('#tmonth').html(month);
+    $('#tday').html(day);
+	/*var zw = $('#en_name').find('span').html();
+	var en = $('#en_name').find('span').toPinyin(zw);;
+	 $('#en_name').find('b').html(en);
+	var zw2 = $('#ens_name').find('span').html();
+	var en2 = $('#en_name').find('span').toPinyin(zw2);;
+	 $('#ens_name').find('b').html(en2);*/
+}
+	$( document).ready(function(){
+		$("#New-Body .new-head.new-head-s2  ").click(function(){ $('#New-Body').hide();$("#F-Card-Enlarge").show();$(this).hide();})
+		$("#F-Card-Enlarge").click(function(){$('#New-Body').show(); $("#New-Body .new-head.new-head-s2").show();$(this).hide();})
+	})
+var widthP = document.documentElement.clientWidth;var heightP = document.documentElement.clientHeight;
+		var widthC = $(".new-head-s2 ").outerWidth();var heightC = $(".new-head-s2 ").outerHeight();
+		$(".hcf-Card-enlarge .new-head-s2").css("left",(widthP-widthC)/2);
+		$(".hcf-Card-enlarge .new-head-s2").css("top",(heightP-heightC)/2);
+		var widthS = $(".new-body .new-head-s2 ").outerWidth(); 
+		$(".new-body .new-head-s2").css("margin-left",(widthP-widthS)/2);
+</script>
+
+
+</body>
+</html>

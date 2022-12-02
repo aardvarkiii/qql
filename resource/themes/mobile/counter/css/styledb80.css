@@ -1,0 +1,301 @@
+body main{
+	color: #fff; font-size: 1.6rem;
+}
+body main .num-anim {
+  display: block;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height:40px;
+  width: 100%;
+  background:#D98349;
+  border: 1px solid #c2601e;
+}
+body main .num-anim .top-half-num,
+body main .num-anim .bottom-half-num {
+text-align: center;
+  overflow: hidden;
+  padding-top: 0px;
+}
+body main .num-anim .top-half-num {
+  height: 50%;
+}
+body main .num-anim .bottom-half-num {
+  margin-top: 0px;
+  height: 50%;
+  margin-top: 65px;
+ /* background-color: #D98248;*/
+  background-images: none;
+}
+body main .num-anim .bottom-half-num .dropper {
+  margin-top: -68px;
+}
+body main .num-anim.bottom-anim {
+  left: 0px;
+  top: 5px;
+  -webkit-transform: perspective(80px) rotateX(90deg) rotateY(0deg);;
+  -moz-transform: perspective(80px) rotateX(90deg) rotateY(0deg);;
+  -ms-transform: perspective(80px) rotateX(90deg) rotateY(0deg);;
+  -o-transform: perspective(80px) rotateX(90deg) rotateY(0deg);;
+  transform: perspective(80px) rotateX(90deg) rotateY(0deg);;
+}
+body main .num-anim.bottom-anim.down {
+  -webkit-transform: perspective(80px) rotateX(0deg) rotateY(0deg);
+  -moz-transform: perspective(80px) rotateX(0deg) rotateY(0deg);
+  -ms-transform: perspective(80px) rotateX(0deg) rotateY(0deg);
+  -o-transform: perspective(80px) rotateX(0deg) rotateY(0deg);
+  transform: perspective(80px) rotateX(0deg) rotateY(0deg);
+  -webkit-transition: 0.25s;
+  -moz-transition: 0.25s;
+  -o-transition: 0.25s;
+  transition: 0.25s;
+  -webkit-transition-delay: 0.25s;
+  -moz-transition-delay: 0.25s;
+  -o-transition-delay: 0.25s;
+  transition-delay: 0.25s;
+}
+body main .num-anim.top-anim {
+  -webkit-transform: perspective(80px) rotateX(0deg) rotateY(0deg);;
+  -moz-transform: perspective(80px) rotateX(0deg) rotateY(0deg);;
+  -ms-transform: perspective(80px) rotateX(0deg) rotateY(0deg);;
+  -o-transform: perspective(80px) rotateX(0deg) rotateY(0deg);;
+  transform: perspective(80px) rotateX(0deg) rotateY(0deg);;
+}
+body main .num-anim.top-anim.up {
+  -webkit-transform: perspective(80px) rotateX(-90deg) rotateY(0deg);
+  -moz-transform: perspective(80px) rotateX(-90deg) rotateY(0deg);
+  -ms-transform: perspective(80px) rotateX(-90deg) rotateY(0deg);
+  -o-transform: perspective(80px) rotateX(-90deg) rotateY(0deg);
+  transform: perspective(80px) rotateX(-90deg) rotateY(0deg);
+  -webkit-transition: 0.25s;
+  -moz-transition: 0.25s;
+  -o-transition: 0.25s;
+  transition: 0.25s;
+}
+body main canvas {
+  height: 0;
+  width: 0;
+  background-color: transparent;
+}
+body main #clock {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  margin: auto;    margin-left: .25rem;
+}
+body main #clock .time-container {
+  float: left;
+  width:auto;
+  height: auto;
+  display: block;
+  margin: 0 0 0 .3rem;
+  border: 2px solid #c2601e;  border-radius: 2px; border-bottom: none;
+  /*border-width: 1px 1px 1px 2px;*/
+   box-shadow: 0 2px 0px rgba(220, 216, 212, .8), inset 0 2px 0px rgba(0, 0, 0, .25);
+   
+  /*border: 1px solid #000;
+  -webkit-border-radius: 10px;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 10px;
+  -moz-background-clip: padding;
+  border-radius: 10px;
+  background-clip: padding-box;
+  background: rgba(24, 24, 40, 0.5);
+  -webkit-box-shadow: 0 2px 0px rgba(255, 255, 255, .25), inset 0 2px 0px rgba(0, 0, 0, .25);
+  -moz-box-shadow: 0 2px 0px rgba(255, 255, 255, .25), inset 0 2px 0px rgba(0, 0, 0, .25);
+  box-shadow: 0 2px 0px rgba(255, 255, 255, .25), inset 0 2px 0px rgba(0, 0, 0, .25);*/
+}
+body main #clock .time-container.hours {    margin: 0 0 0 1rem;}
+.time-container-in{
+    display: block;
+    font-size: 2rem;
+    color: #E8935A;
+    width: .4rem;
+    float: left;
+    font-weight: bolder;
+    vertical-align: top;
+    padding-top: 10px;
+    padding-left: .2rem;
+	 }
+body main #clock .time-container .num {
+  position: absolute;
+  top: 0px;
+  left: 00px;
+  display: inline-block;
+  z-index: 1;
+  height: 50%;
+  overflow: hidden;
+  width: 100%;
+  /*background: rgba(183, 92, 32, 0.3); */   padding-top: 70%;
+ }
+body main #clock .time-container .num.bottom {
+  top: 22%;
+  height: 30%;   /*background: #E8935A;*/
+}
+body main #clock .time-container .num.bottom .bottom-container {
+  margin-top: -76%;
+}
+
+body main #clock .time-container .digit {
+  position: relative;
+  float: left;
+  width: .88rem;
+  height: 50px;
+  margin: 0;    font-size: 1.6rem;
+  text-align: center;
+ /* background: #E8935A;*/
+  overflow: hidden;
+  /*border-bottom: 1px double #c2601e; */
+ background:url(../../images/datada03.png) repeat bottom; background-size: auto;
+}
+body main #clock .time-container .time-container-topbg{
+	 display: block;background: rgba(183, 92, 32, 0.3);
+position: absolute; width: 100%; height: 45%; top:0;    z-index: 99;
+}
+body main #clock .time-container .digit.nodigit{ width: .4rem;}
+
+/*body main #clock .time-container .digit:first-child{ padding-left: .8rem;}
+body main #clock .time-container .digit:last-child{ padding-right: .8rem;}*/
+
+body main #clock .time-container .digit::after {
+  content: " ";
+  /*border: 2px solid rgba(0, 0, 0, 0.15);*/
+  width: 80px;
+  margin-top: 3px;
+  height: 121px;
+  -webkit-border-radius: 5px;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 5px;
+  -moz-background-clip: padding;
+  border-radius: 5px;
+  background-clip: padding-box;
+  display: inline-block;
+}
+
+.swapper {
+  position: relative;
+  z-index: 2;
+}
+body main #clock .time-container.seconds .digit{
+	background:url(../../images/datada03-2.png) repeat bottom; background-size: auto;
+}
+
+
+/*家属*/
+body .f-Card-enlarge.familysty main #clock .time-container .digit{
+	background: url(../../images/datada03-fam.png) repeat bottom;
+    background-size: auto;
+}
+body .f-Card-enlarge.familysty main #clock .time-container{    border: 2px solid #114433;}
+body .f-Card-enlarge.familysty main #clock .time-container .time-container-topbg{    background: rgba(17, 68, 51, 0.3);}
+/*body .f-Card-enlarge.familysty main #clock .time-container .num.bottom{background: #3D7260;}*/
+.f-Card-enlarge.familysty .time-container-in{    color:  #3D7260;}
+body .f-Card-enlarge.familysty main .num-anim{    background: #3D7260; border: 1px solid #114433;}
+body .f-Card-enlarge.familysty main #clock .time-container.seconds .digit{    background: url(../../images/datada03-2-fam.png) repeat bottom;
+    background-size: auto;}
+
+/*教工*/
+body .f-Card-enlarge.facultysty main #clock .time-container .digit{
+	background: url(../../images/datada03-fac.png) repeat bottom;
+    background-size: auto;
+}
+body .f-Card-enlarge.facultysty main #clock .time-container{    border: 2px solid #4f0812;}
+body .f-Card-enlarge.facultysty main #clock .time-container .time-container-topbg{    background: rgba(60, 8, 15, 0.3);}
+/*body .f-Card-enlarge.facultysty main #clock .time-container .num.bottom{background: #7a0f1f;}*/
+.f-Card-enlarge.facultysty .time-container-in{    color:  #7a0f1f;}
+body .f-Card-enlarge.facultysty main .num-anim{    background: #7a0f1f; border: 1px solid #4f0812;}
+body .f-Card-enlarge.facultysty main #clock .time-container.seconds .digit{    background: url(../../images/datada03-2-fac.png) repeat bottom;
+    background-size: auto;}
+
+/*临时*/
+body .f-Card-enlarge.temporary main #clock .time-container .digit{
+	background: url(../../images/datada03-tem.png) repeat bottom;
+    background-size: auto;
+}
+body .f-Card-enlarge.temporary main #clock .time-container{    border: 2px solid #0d3c5d;}
+body .f-Card-enlarge.temporary main #clock .time-container .time-container-topbg{    background: rgba(13, 60, 93, 0.3);}
+/*body .f-Card-enlarge.temporary main #clock .time-container .num.bottom{background: #21557A;}*/
+.f-Card-enlarge.temporary .time-container-in{    color:  #21557A;}
+body .f-Card-enlarge.temporary main .num-anim{    background: #21557A; border: 1px solid #0d3c5d;}
+body .f-Card-enlarge.temporary main #clock .time-container.seconds .digit{    background: url(../../images/datada03-2-tem.png) repeat bottom;
+    background-size: auto;}
+
+
+/**/
+body main #clock .time-container.years .digit:nth-child(2){ width: 3.8rem;  font-weight: 500;}
+body main #clock .time-container.years .num.bottom{top: 18%; padding-top: 78%;}
+
+body main #clock .time-container.months .digit:nth-child(2){ width: 1.8rem; font-weight: 500;}
+body main #clock .time-container.months .num.bottom{top: 18%; padding-top: 78%;}
+body main #clock .time-container.days .digit:nth-child(2){ width: 1.8rem;  font-weight: 500;}
+body main #clock .time-container.days .num.bottom{top: 18%; padding-top: 78%;}
+@media (min-width: 420px) and (max-width: 768px) {}
+@media (min-width: 380px) and (max-width: 420px) {
+	/*body main #clock{margin-left: 1.7rem;}*/
+	body main #clock .time-container.days .digit:nth-child(2){ width: 1.8rem; }
+	body main #clock .time-container.months .digit:nth-child(2){width: 1.8rem;}
+}
+@media (min-width: 370px) and (max-width: 380px) {
+	/*body main #clock{margin-left: .25rem;}*/
+}
+@media (min-width: 340px) and (max-width: 370px) {
+	body main #clock .time-container .digit{width: .8rem;font-size: 1.4rem;}
+	/*body main #clock{    margin-left: 0rem;}*/
+}
+@media (max-width: 330px) {
+	body main #clock .time-container .digit{width: .65rem;font-size: .98rem;}
+	body main #clock .time-container.hours { margin: 0 0 0 .8rem;}
+	body main #clock .time-container .digit{height: 42px;}
+	body main #clock .time-container .num{    padding-top: 50%;}
+	body main .num-anim .bottom-half-num{height:40%;}
+	body main #clock .time-container.years .digit:nth-child(2){    width: 2.6rem;   font-size: 1.1rem;  font-weight: 500;}
+    body main #clock .time-container.months .digit:nth-child(2){ width: 1.6rem; font-weight: 500;    font-size: 1.1rem;}
+        body main #clock .time-container.days .digit:nth-child(2){ width: 1.6rem; font-weight: 500;    font-size: 1.1rem;}
+    body main #clock .time-container.years .num.bottom{    top: 16%;}
+     body main #clock .time-container.months .num.bottom{    top: 16%;}
+      body main #clock .time-container.days .num.bottom{    top: 16%;}
+
+}
+
+
+/*add 2019914*/
+body .hcf-timebox main{ font-size: 1.4rem;}
+body .hcf-timebox main #clock{    margin-top: -3.5rem;}
+body .hcf-timebox main #clock .time-container .digit{ height: 2.4rem; line-height: 2.4rem;
+font-size: 1.4rem;}
+body .hcf-timebox main #clock .time-container .digit.nodigit {     width: 1px;}
+.hcf-timebox .time-container-in{        width: .2rem;
+    margin-top: -2rem;
+    padding-left: .1rem;
+    font-size: 1.5rem;}
+body .hcf-timebox main #clock .time-container .num.bottom .bottom-container {
+    margin-top: -76%;
+}
+body .hcf-timebox main #clock .time-container.years .num.bottom {
+    top: 34%;
+    padding-top: 78%;
+}
+body .hcf-timebox main #clock .time-container.months .num.bottom {
+    top: 10%;
+    padding-top: 78%;
+}
+body .hcf-timebox main #clock .time-container.days .num.bottom {
+    top:  10%;
+    padding-top: 78%;
+}
+body .hcf-timebox  main #clock .time-container .num.bottom { top: -73%;}
+body  .hcf-timebox main #clock .time-container .num{    height: 100%; padding-top: 0;
+    margin-top: -30%;}
+
+
+body .hcf-timebox  main #clock .time-container .digit{
+	background: url(../../images/datada011-fac.png) repeat bottom;
+    background-size: auto;
+}
+body .hcf-timebox  main #clock .time-container{    border: 2px solid #830808;}
+body .hcf-timebox  main #clock .time-container .time-container-topbg{    background: rgba(60, 8, 15, 0.3);}
+/*body .f-Card-enlarge.facultysty main #clock .time-container .num.bottom{background: #7a0f1f;}*/
+.hcf-timebox  .time-container-in{    color:  #7a0f1f;}
+body .hcf-timebox  main .num-anim{    background: #ff0000; border: 1px solid #830808;}
+body .hcf-timebox  main #clock .time-container.seconds .digit{    background: url(../../images/datada011-2-fac.png) repeat bottom;
+    background-size: auto;}

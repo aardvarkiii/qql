@@ -1,0 +1,96 @@
+.icon-blank{
+	background:url('icons/blank.html') no-repeat center center;
+}
+.icon-add{
+	background:url('icons/edit_add.html') no-repeat center center;
+}
+.icon-edit{
+	background:url('icons/pencil.html') no-repeat center center;
+}
+.icon-clear{
+	background:url('icons/clear.html') no-repeat center center;
+}
+.icon-remove{
+	background:url('icons/edit_remove.html') no-repeat center center;
+}
+.icon-save{
+	background:url('icons/filesave.html') no-repeat center center;
+}
+.icon-cut{
+	background:url('icons/cut.html') no-repeat center center;
+}
+.icon-ok{
+	background:url('icons/ok.html') no-repeat center center;
+}
+.icon-no{
+	background:url('icons/no.html') no-repeat center center;
+}
+.icon-cancel{
+	background:url('icons/cancel.html') no-repeat center center;
+}
+.icon-reload{
+	background:url('icons/reload.html') no-repeat center center;
+}
+.icon-search{
+	background:url('icons/search.html') no-repeat center center;
+}
+.icon-print{
+	background:url('icons/print.html') no-repeat center center;
+}
+.icon-help{
+	background:url('icons/help.html') no-repeat center center;
+}
+.icon-undo{
+	background:url('icons/undo.html') no-repeat center center;
+}
+.icon-redo{
+	background:url('icons/redo.html') no-repeat center center;
+}
+.icon-back{
+	background:url('icons/back.html') no-repeat center center;
+}
+.icon-sum{
+	background:url('icons/sum.html') no-repeat center center;
+}
+.icon-tip{
+	background:url('icons/tip.html') no-repeat center center;
+}
+.icon-filter{
+	background:url('icons/filter.html') no-repeat center center;
+}
+.icon-man{
+	background:url('icons/man.html') no-repeat center center;
+}
+.icon-lock{
+	background:url('icons/lock.html') no-repeat center center;
+}
+.icon-more{
+	background:url('icons/more.html') no-repeat center center;
+}
+
+
+.icon-mini-add{
+	background:url('icons/mini_add.html') no-repeat center center;
+}
+.icon-mini-edit{
+	background:url('icons/mini_edit.html') no-repeat center center;
+}
+.icon-mini-refresh{
+	background:url('icons/mini_refresh.html') no-repeat center center;
+}
+
+.icon-large-picture{
+	background:url('icons/large_picture.html') no-repeat center center;
+}
+.icon-large-clipart{
+	background:url('icons/large_clipart.html') no-repeat center center;
+}
+.icon-large-shapes{
+	background:url('icons/large_shapes.html') no-repeat center center;
+}
+.icon-large-smartart{
+	background:url('icons/large_smartart.html') no-repeat center center;
+}
+.icon-large-chart{
+	background:url('icons/large_chart.html') no-repeat center center;
+}
